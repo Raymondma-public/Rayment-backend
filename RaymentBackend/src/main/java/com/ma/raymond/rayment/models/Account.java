@@ -1,5 +1,7 @@
 package com.ma.raymond.rayment.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Account {
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "account")
+    @JsonIgnoreProperties("account")
     private List<CurrencyAccount> currencyAccountList;
 
     public Integer getId() {

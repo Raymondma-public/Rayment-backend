@@ -1,5 +1,7 @@
 package com.ma.raymond.rayment.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class CurrencyAccount {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
+    @JsonIgnoreProperties("currencyAccountList")
     private Account account;
 
     public Integer getId() {

@@ -33,4 +33,17 @@ public class FRATest {
         FRA fra=new FRA(fixedRate,principal,startDate,matureDate,365);
         System.out.println(fra.settlmentAmt(floatingRate));
     }
+
+    @Test
+    public  void testSettlement3(){
+        LocalDate startDate=LocalDate.of(2019, Month.MARCH,6);
+        LocalDate matureDate=LocalDate.of(2019, Month.MARCH,1);
+
+        double fixedRate=0.12785;
+        double floatingRate=0.115;
+        double principal=100;
+
+        FRA fra=new FRA(fixedRate,principal,startDate,matureDate,365);
+        System.out.println(fra.settlmentAmt(floatingRate));
+    }
 }

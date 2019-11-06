@@ -25,7 +25,7 @@ public class FRA {
         this.year=year;
 
         if(this.day<=0){
-            throw new RuntimeException("Range <= 0 ");
+            throw new RuntimeException("Date Range <= 0 ");
         }
 
 

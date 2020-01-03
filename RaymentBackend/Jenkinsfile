@@ -1,10 +1,27 @@
-node {  
-   stage('Git'){
+node {
+    git branch: 'master',
+    credentialsId: '12345-1234-4696-af25-123455',
+    url: 'https://github.com/Raymondma-public/Rayment-backend.git'
+
+   stage('Git clone'){
        echo 'Git pull'
+       checkout([$class: 'GitSCM', branches: [[name: '*/${branch}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '${credentialsId}', url: '${url}']]])
+       echo 'Git clone'
+       git url: '$url'
    }
+
    stage('Gradle Build'){
         echo 'Gradle build'
+        //def buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+        if (isUnix()) {
+            dir('RaymentBackend/build/libs') {sh './gradlew clean build'}
+        } else {
+            dir('RaymentBackend/build/libs') {bat 'gradlew.bat clean build'}
+        }
     }
+    stage('Publish build info'){
+           server.publishBuildInfo buildInfo
+     }
     stage('Docker build'){
         echo 'Docker build'
     }

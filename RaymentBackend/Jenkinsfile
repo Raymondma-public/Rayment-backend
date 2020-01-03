@@ -1,8 +1,19 @@
 node {  
-   stage('Stage 1'){
-       echo 'Hello World 1'
+   stage('Git'){
+       echo 'Git pull'
    }
-   stage('Stage 2'){
-       echo 'Hello World 2'
-   }
+   stage('Gradle Build'){
+        echo 'Gradle build'
+    }
+    stage('Docker build'){
+        echo 'Docker build'
+    }
+    stage('Push docker'){
+        echo 'Push docker'
+    }
+
+    stage('Deploy K8s'){
+            echo 'Push docker'
+    }
+
 }

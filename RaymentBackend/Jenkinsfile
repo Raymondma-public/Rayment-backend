@@ -13,9 +13,9 @@ node {
         echo 'Gradle build'
         //def buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
         if (isUnix()) {
-            dir('RaymentBackend/build/libs') {sh './gradlew clean build'}
+            dir('RaymentBackend') {sh './gradlew clean build'}
         } else {
-            dir('RaymentBackend/build/libs') {bat 'gradlew.bat clean build'}
+            dir('RaymentBackend') {bat 'gradlew.bat clean build'}
         }
     }
     stage('Publish build info'){

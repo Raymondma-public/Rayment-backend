@@ -38,10 +38,10 @@ node('haimaxy-jnlp')  {
     stage('Deploy K8s'){
             echo 'Deploy to K8s'
             dir('RaymentBackend/k8s'){
-                echo '${build_tag}'
-                echo '${env.BRANCH_NAME}'
-                sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
-                sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
+                echo "${build_tag}"
+                echo "${env.BRANCH_NAME}"
+                sh "sed -i 's/<BUILD_TAG>/${build_tag}/' raymond-backend-service-deployment.yaml"
+                sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' raymond-backend-service-deployment.yaml"
                 sh "kubectl apply -f raymond-backend-service-deployment.yaml"
             }
     }

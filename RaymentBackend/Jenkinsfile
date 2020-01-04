@@ -8,7 +8,7 @@ node('haimaxy-jnlp')  {
            credentialsId: '12345-1234-4696-af25-123455',
            url: 'https://github.com/Raymondma-public/Rayment-backend.git'
        build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-       echo '${build_tag}'
+       echo "${build_tag}"
    }
 
    stage('Gradle Build'){

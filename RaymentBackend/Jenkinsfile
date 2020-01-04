@@ -21,19 +21,19 @@ node {
             dir('RaymentBackend') {bat 'gradlew.bat clean build'}
         }
     }
-    stage('Publish build info'){
-           server.publishBuildInfo buildInfo
-     }
+
     stage('Docker build'){
         echo 'Docker build'
         dir('RaymentBackend'){sh 'docker build'}
+
     }
     stage('Push docker'){
         echo 'Push docker'
     }
 
     stage('Deploy K8s'){
-            echo 'Push docker'
+            echo 'Deploy to K8s'
+            dir('RaymentBackend'){sh 'docker build'}
     }
 
 }

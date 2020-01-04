@@ -8,7 +8,8 @@ node('haimaxy-jnlp')  {
            credentialsId: '12345-1234-4696-af25-123455',
            url: 'https://github.com/Raymondma-public/Rayment-backend.git'
        script {
-                   build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+            build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+            echo '${build_tag}'
        }
    }
 
@@ -27,6 +28,7 @@ node('haimaxy-jnlp')  {
 
     stage('Docker build'){
         echo 'Docker build'
+        echo '${build_tag}'
         sh 'docker build -t rayment-backend:${build_tag} .'
 
     }
@@ -37,6 +39,8 @@ node('haimaxy-jnlp')  {
     stage('Deploy K8s'){
             echo 'Deploy to K8s'
             dir('k8s'){
+                echo '${build_tag}'
+                echo '${env.BRANCH_NAME}'
                 sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
                 sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
                 sh "kubectl apply -f raymond-backend-service-deployment.yaml"

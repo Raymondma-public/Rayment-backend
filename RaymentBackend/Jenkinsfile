@@ -24,7 +24,6 @@ node {
 
     stage('Docker build'){
         echo 'Docker build'
-        dir('RaymentBackend')
         docker{
             image 'raymond-backend'
         }

@@ -27,8 +27,9 @@ node('haimaxy-jnlp')  {
     stage('Docker build'){
         echo 'Docker build'
         echo "${build_tag}"
-        sh "docker build -t rayment-backend:${build_tag} ."
-
+        dir('RaymentBackend') {
+            sh "docker build -t rayment-backend:${build_tag} ."
+        }
     }
     stage('Push docker'){
         echo 'Push docker'
@@ -36,7 +37,7 @@ node('haimaxy-jnlp')  {
 
     stage('Deploy K8s'){
             echo 'Deploy to K8s'
-            dir('k8s'){
+            dir('RaymentBackend/k8s'){
                 echo '${build_tag}'
                 echo '${env.BRANCH_NAME}'
                 sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"

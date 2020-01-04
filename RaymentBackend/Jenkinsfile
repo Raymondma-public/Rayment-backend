@@ -26,8 +26,8 @@ node('haimaxy-jnlp')  {
 
     stage('Docker build'){
         echo 'Docker build'
-        echo '${build_tag}'
-        sh 'docker build -t rayment-backend:${build_tag} .'
+        echo "${build_tag}"
+        sh "docker build -t rayment-backend:${build_tag} ."
 
     }
     stage('Push docker'){

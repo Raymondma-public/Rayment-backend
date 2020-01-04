@@ -24,7 +24,10 @@ node {
 
     stage('Docker build'){
         echo 'Docker build'
-        dir('RaymentBackend'){sh 'docker build'}
+        dir('RaymentBackend')
+        docker{
+            image 'raymond-backend'
+        }
 
     }
     stage('Push docker'){

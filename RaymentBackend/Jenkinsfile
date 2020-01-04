@@ -1,4 +1,4 @@
-node {
+node('haimaxy-jnlp')  {
 
    stage('Git clone'){
        //echo 'Git pull'

@@ -7,6 +7,9 @@ node {
        git branch: 'master',
            credentialsId: '12345-1234-4696-af25-123455',
            url: 'https://github.com/Raymondma-public/Rayment-backend.git'
+       script {
+                   build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+       }
    }
 
    stage('Gradle Build'){
@@ -24,9 +27,7 @@ node {
 
     stage('Docker build'){
         echo 'Docker build'
-        docker{
-            image 'raymond-backend'
-        }
+        sh 'docker build -t rayment-backend:${build_tag} .'
 
     }
     stage('Push docker'){
@@ -35,7 +36,11 @@ node {
 
     stage('Deploy K8s'){
             echo 'Deploy to K8s'
-            dir('RaymentBackend'){sh 'docker build'}
+            dir('k8s'){
+                sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
+                sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
+                sh "kubectl apply -f raymond-backend-service-deployment.yaml"
+            }
     }
 
 }

@@ -27,7 +27,10 @@ spec:
     spec:
       containers:
         - name: rayment-backend
-          image: rayment-backend
+          image: rayment-backend:<BUILD_TAG>
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
+          env:
+            - name: branch
+              value: <BRANCH_NAME>

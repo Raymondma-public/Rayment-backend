@@ -27,6 +27,7 @@ node('haimaxy-jnlp')  {
     stage('Docker build'){
         echo 'Docker build'
         echo "${build_tag}"
+        sh 'SPRING_PROFILES_ACTIVE=prod'
         dir('RaymentBackend') {
             sh "docker build -t rayment-backend:${build_tag} ."
         }

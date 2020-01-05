@@ -2,16 +2,16 @@ plugins {
     id 'org.springframework.boot' version '2.2.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
-    id 'application'
+//    id 'application'
 }
 
 group = 'com.ma.raymond'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-applicationDefaultJvmArgs = [
-        "-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"
-]
+//applicationDefaultJvmArgs = [
+//        "-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"
+//]
 
 configurations {
     developmentOnly
@@ -57,7 +57,7 @@ test {
     useJUnitPlatform()
 }
 
-//task production << {
-//    bootRun.systemProperty 'spring.profiles.active', 'production'
+//task production  {
+//    build.systemProperty 'spring.profiles.active', 'prod'
 //}
 

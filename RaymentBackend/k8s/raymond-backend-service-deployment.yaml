@@ -1,0 +1,37 @@
+#updated to LF
+kind: Service
+apiVersion: v1
+metadata:
+  name: rayment-backend-service
+spec:
+  selector:
+    app: rayment-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      nodePort: 30083
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rayment-backend
+spec:
+  selector:
+    matchLabels:
+      app: rayment-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rayment-backend
+    spec:
+      containers:
+        - name: rayment-backend
+          image: rayment-backend:<BUILD_TAG>
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: branch
+              value: <BRANCH_NAME>

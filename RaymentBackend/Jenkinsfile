@@ -22,7 +22,9 @@ node('haimaxy-jnlp')  {
             dir('RaymentBackend') {
 
                 sh 'chmod a+x gradlew'
-                sh './gradlew clean build'
+                sh './gradlew clean '
+                sh './gradlew build -Dspring.profiles.active=prod'
+
             }
         } else {
             dir('RaymentBackend') {bat 'gradlew.bat clean build'}

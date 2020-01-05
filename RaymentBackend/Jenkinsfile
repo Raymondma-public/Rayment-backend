@@ -16,6 +16,7 @@ node('haimaxy-jnlp')  {
         //def buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
         if (isUnix()) {
             dir('RaymentBackend') {
+                sh 'SPRING_PROFILES_ACTIVE=prod'
                 sh 'chmod a+x gradlew'
                 sh './gradlew clean build'
             }
@@ -27,7 +28,6 @@ node('haimaxy-jnlp')  {
     stage('Docker build'){
         echo 'Docker build'
         echo "${build_tag}"
-        sh 'SPRING_PROFILES_ACTIVE=prod'
         dir('RaymentBackend') {
             sh "docker build -t rayment-backend:${build_tag} ."
         }

@@ -20,7 +20,6 @@ node('haimaxy-jnlp')  {
         //def buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
         if (isUnix()) {
             dir('RaymentBackend') {
-
                 sh 'chmod a+x gradlew'
                 sh './gradlew clean '
                 sh './gradlew build -Dspring.profiles.active=prod'

@@ -1,10 +1,11 @@
 node('haimaxy-jnlp')  {
 
-    environment {
-        SPRING_PROFILES_ACTIVE='prod'
-    }
+//    environment {
+//        SPRING_PROFILES_ACTIVE='prod'
+//    }
 
    stage('Git clone'){
+        SPRING_PROFILES_ACTIVE='prod'
        //echo 'Git pull'
        //checkout([$class: 'GitSCM', branches: [[name: '*/${branch}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '${credentialsId}', url: '${url}']]])
        echo 'Git clone'
@@ -33,6 +34,7 @@ node('haimaxy-jnlp')  {
     stage('Docker build'){
         echo 'Docker build'
         echo "${build_tag}"
+        echo "${SPRING_PROFILES_ACTIVE}"
         dir('RaymentBackend') {
             sh "sed -i 's/<SPRING_PROFILES_ACTIVE>/${SPRING_PROFILES_ACTIVE}/' Dockerfile"
             sh "docker build -t rayment-backend:${build_tag} ."

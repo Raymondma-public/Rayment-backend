@@ -9,9 +9,6 @@ group = 'com.ma.raymond'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-//applicationDefaultJvmArgs = [
-//        "-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"
-//]
 
 configurations {
     developmentOnly
@@ -40,6 +37,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 //    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
+
+    compile "org.flywaydb:flyway-core"
 //    implementation 'org.springframework.boot:spring-boot-configuration-processor'
 //    implementation files('libs/mysql-connector-java-8.0.15.jar')
 // https://mvnrepository.com/artifact/mysql/mysql-connector-java

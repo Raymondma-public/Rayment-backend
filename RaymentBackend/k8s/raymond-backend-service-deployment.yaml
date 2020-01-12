@@ -20,7 +20,7 @@ spec:
   selector:
     matchLabels:
       app: rayment-backend
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -35,3 +35,19 @@ spec:
           env:
             - name: branch
               value: <BRANCH_NAME>
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              httpHeaders:
+                - name: Host
+                  value: KubernetesLivenessProbe
+            initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              httpHeaders:
+                - name: Host
+                  value: KubernetesLivenessProbe
+            initialDelaySeconds: 20

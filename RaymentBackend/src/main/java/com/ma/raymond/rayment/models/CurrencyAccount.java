@@ -17,6 +17,8 @@ public class CurrencyAccount {
     @JsonIgnoreProperties("currencyAccountList")
     private Account account;
 
+
+
     public Integer getId() {
         return id;
     }

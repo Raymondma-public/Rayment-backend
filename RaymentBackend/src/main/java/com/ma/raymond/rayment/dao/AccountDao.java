@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountDao extends CrudRepository<Account, Long> {
 
+
     @Query("SELECT acc FROM Account acc WHERE acc.id= :accountId ")
     Account getAccount(Integer accountId);
 

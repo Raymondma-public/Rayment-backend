@@ -1,6 +1,7 @@
 package com.ma.raymond.rayment.services;
 
 import com.ma.raymond.rayment.dao.AccountDao;
+import com.ma.raymond.rayment.exceptions.AccountNotFoundException;
 import com.ma.raymond.rayment.models.Account;
 import com.ma.raymond.rayment.models.CurrencyAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService {
@@ -19,14 +21,13 @@ public class AccountService {
 
         List<CurrencyAccount> currencyAccountList=new ArrayList();
 
-        for(String curr:currs){
-            CurrencyAccount currencyAccount=new CurrencyAccount();
+        for(String curr:currs) {
+            CurrencyAccount currencyAccount = new CurrencyAccount();
             currencyAccount.setBalance(0);
             currencyAccount.setCurrency(curr);
             currencyAccount.setAccount(account);
-            currencyAccountList.add(currencyAccount);
+            account.addCurrencyAccount(currencyAccount);
         }
-        account.setCurrencyAccountList(currencyAccountList);
         accountDao.save(account);
 
     }
@@ -37,5 +38,15 @@ public class AccountService {
             accountList.add(a);
         }
         return accountList;
+    }
+
+    public Integer getAccountId(String type, String value) throws AccountNotFoundException {
+        Optional<Account> account=Optional.empty();
+        if(type.equals("email")){
+            account=accountDao.getAccountByEmail(value);
+        }else if(type.equals("phone")){
+            account=accountDao.getAccountByPhone(value);
+        }
+        return account.orElseThrow(()->new AccountNotFoundException(String.format("%s %s not found",type,value))).getId();
     }
 }

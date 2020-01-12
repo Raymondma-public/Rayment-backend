@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Account {
     private String password;
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account" ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnoreProperties("account")
     private List<CurrencyAccount> currencyAccountList;
 
@@ -75,5 +76,13 @@ public class Account {
 
     public void setCurrencyAccountList(List<CurrencyAccount> currencyAccountList) {
         this.currencyAccountList = currencyAccountList;
+    }
+
+    public void addCurrencyAccount(CurrencyAccount currencyAccount) {
+        if(currencyAccountList==null){
+            currencyAccountList=new ArrayList();
+        }
+        currencyAccount.setAccount(this);
+        this.currencyAccountList.add(currencyAccount);
     }
 }

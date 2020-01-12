@@ -1,6 +1,7 @@
 package com.ma.raymond.rayment.services;
 
 import com.ma.raymond.rayment.dao.CurrAccountDao;
+import com.ma.raymond.rayment.exceptions.AccountNotFoundException;
 import com.ma.raymond.rayment.models.CurrencyAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class DDService {
     DDAService ddaService;
 
     @Transactional
-    public void dd(Integer fromAcctId, Integer toAccountId, String curr, double amount) {
+    public void dd(Integer fromAcctId, Integer toAccountId, String curr, double amount) throws AccountNotFoundException {
         if(!ddaService.isDDAuthorized(fromAcctId,toAccountId)){
             throw new RuntimeException("DDA not authorized");
         }

@@ -24,6 +24,6 @@ public class BalanceService {
                return  currAcc.getBalance();
             }
         }
-        throw new RuntimeException("No such Currency Account");
+        throw new AccountNotFoundException(String.format("No %s Currency Account",curr));
     }
 }

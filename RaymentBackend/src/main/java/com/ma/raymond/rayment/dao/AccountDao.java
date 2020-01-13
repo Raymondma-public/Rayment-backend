@@ -14,7 +14,7 @@ public interface AccountDao extends CrudRepository<Account, Long> {
     @Query("SELECT acc FROM Account acc WHERE acc.phone= :phone ")
     Optional<Account> getAccountByPhone(String phone);
 
-    @Query("SELECT acc FROM Account acc WHERE acc.phone= :email")
+    @Query("SELECT acc FROM Account acc WHERE acc.email= :email")
     Optional<Account> getAccountByEmail(String email);
 
     @Query("SELECT acc FROM Account acc WHERE acc.id= :accountId ")

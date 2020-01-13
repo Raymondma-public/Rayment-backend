@@ -40,9 +40,9 @@ public class AccountController {
     }
 
     @GetMapping("/all")
-    public List<Account> getAll() {
+    public ResponseDTO getAll() {
         List<Account> accountList = accountService.getAll();
-        return accountList;
+        return new ResponseDTO("", "Accounts get", "", "temp instance", "helpUrl", accountList);
     }
 
 

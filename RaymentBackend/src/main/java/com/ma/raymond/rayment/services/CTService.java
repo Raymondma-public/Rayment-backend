@@ -3,6 +3,7 @@ package com.ma.raymond.rayment.services;
 import com.ma.raymond.rayment.dao.AccountDao;
 import com.ma.raymond.rayment.dao.CurrAccountDao;
 import com.ma.raymond.rayment.exceptions.AccountNotFoundException;
+import com.ma.raymond.rayment.exceptions.InsufficientFundException;
 import com.ma.raymond.rayment.models.Account;
 import com.ma.raymond.rayment.models.CurrencyAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class CTService {
 
 
     @Transactional
-    public void ct(Integer fromAcctId, Integer toAccountId, String curr, double amount) throws AccountNotFoundException {
+    public void ct(Integer fromAcctId, Integer toAccountId, String curr, double amount) throws AccountNotFoundException, InsufficientFundException {
         Optional<Account> formAccount=accountDao.getAccountById(fromAcctId);
         Optional<Account> toAccount=accountDao.getAccountById(toAccountId);
 
@@ -48,8 +49,14 @@ public class CTService {
         if (fromAcc == null || toAcc == null) {
             throw new RuntimeException("One Currency Account not found");
         }
+        if(fromAcc.getBalance() - amount<0){
+            throw new InsufficientFundException(String.format("Insufficient Fund: %.2f",fromAcc.getBalance()));
+        }
+
         fromAcc.setBalance(fromAcc.getBalance() - amount);
         toAcc.setBalance(toAcc.getBalance() + amount);
+
+
         currAccountDao.save(fromAcc);
         currAccountDao.save(toAcc);
     }

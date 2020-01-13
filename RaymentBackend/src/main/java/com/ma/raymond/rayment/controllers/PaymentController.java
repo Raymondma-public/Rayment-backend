@@ -1,6 +1,7 @@
 package com.ma.raymond.rayment.controllers;
 
 import com.ma.raymond.rayment.exceptions.AccountNotFoundException;
+import com.ma.raymond.rayment.exceptions.InsufficientFundException;
 import com.ma.raymond.rayment.models.httpObject.ResponseDTO;
 import com.ma.raymond.rayment.services.BalanceService;
 import com.ma.raymond.rayment.services.CTService;
@@ -23,7 +24,7 @@ public class PaymentController {
 
 
     @PutMapping("/CT")
-    public ResponseDTO ct(@RequestParam("from_acc_id") Integer fromAccId, @RequestParam("to_acc_id") Integer toAccId, @RequestParam("curr") String curr, @RequestParam("amount") double amount) throws AccountNotFoundException {
+    public ResponseDTO ct(@RequestParam("from_acc_id") Integer fromAccId, @RequestParam("to_acc_id") Integer toAccId, @RequestParam("curr") String curr, @RequestParam("amount") double amount) throws AccountNotFoundException, InsufficientFundException {
         ctService.ct(fromAccId,toAccId,curr,amount);
         return new ResponseDTO("", String.format("Transfer %s %.2f OK ",curr,amount), "", "temp instance", "helpUrl", null);
     }

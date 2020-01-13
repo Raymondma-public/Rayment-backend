@@ -23,7 +23,7 @@ public class AccountController {
         Integer accountId = null;
 
         accountId = accountService.getAccountId(type, value);
-        return new ResponseDTO("", "Account created", "", "temp instance", "helpUrl", accountId);
+        return new ResponseDTO("", "Account Id get", "", "temp instance", "helpUrl", accountId);
 
 
     }

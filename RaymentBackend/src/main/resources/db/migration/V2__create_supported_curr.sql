@@ -1,6 +1,6 @@
 USE `payment` ;
 
-CREATE TABLE IF NOT EXISTS `payment`.`Supported_Curr` (
+CREATE TABLE IF NOT EXISTS `payment`.`supported_curr` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `curr_code` VARCHAR(3) NOT NULL,
   `curr_name` VARCHAR(255) NULL,

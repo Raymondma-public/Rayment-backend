@@ -2,7 +2,7 @@ CREATE SCHEMA IF NOT EXISTS `payment` DEFAULT CHARACTER SET utf8 ;
 USE `payment` ;
 
 
-CREATE TABLE IF NOT EXISTS `payment`.`Account` (
+CREATE TABLE IF NOT EXISTS `payment`.`account` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `phone` VARCHAR(45) NULL,
   `email` VARCHAR(256) NULL,
@@ -13,22 +13,22 @@ CREATE TABLE IF NOT EXISTS `payment`.`Account` (
 ENGINE = InnoDB;
 
 
-CREATE TABLE IF NOT EXISTS `payment`.`Currency_Account` (
+CREATE TABLE IF NOT EXISTS `payment`.`currency_account` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `currency` VARCHAR(3) NULL,
   `balance` DOUBLE NOT NULL,
   `account_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `Currency_Account_FK_idx` (`account_id` ASC) VISIBLE,
-  CONSTRAINT `Currency_Account_FK`
+  INDEX `currency_account_fk_idx` (`account_id` ASC) VISIBLE,
+  CONSTRAINT `currency_account_fk`
     FOREIGN KEY (`account_id`)
-    REFERENCES `payment`.`Account` (`id`)
+    REFERENCES `payment`.`account` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
-CREATE TABLE IF NOT EXISTS `payment`.`History` (
+CREATE TABLE IF NOT EXISTS `payment`.`history` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `from` INT NULL,
   `to` INT NULL,
@@ -36,37 +36,37 @@ CREATE TABLE IF NOT EXISTS `payment`.`History` (
   `amount` DOUBLE NULL,
   `create_date` DATETIME NULL,
   PRIMARY KEY (`id`),
-  INDEX `From_Currency_Account_History_FK_idx` (`from` ASC) VISIBLE,
-  INDEX `To_Currency_Account_History_FK_idx` (`to` ASC) VISIBLE,
-  CONSTRAINT `From_Currency_Account_History_FK`
+  INDEX `from_currency_account_history_fk_idx` (`from` ASC) VISIBLE,
+  INDEX `to_currency_account_history_fk_idx` (`to` ASC) VISIBLE,
+  CONSTRAINT `from_currency_account_history_fk`
     FOREIGN KEY (`from`)
-    REFERENCES `payment`.`Currency_Account` (`id`)
+    REFERENCES `payment`.`currency_account` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `To_Currency_Account_History_FK`
+  CONSTRAINT `to_currency_account_history_fk`
     FOREIGN KEY (`to`)
-    REFERENCES `payment`.`Currency_Account` (`id`)
+    REFERENCES `payment`.`currency_account` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
-CREATE TABLE IF NOT EXISTS `payment`.`DDA` (
+CREATE TABLE IF NOT EXISTS `payment`.`dda` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `from_acc_id` INT NULL,
   `to_acc_id` INT NULL,
   `create_date` DATETIME NULL,
   PRIMARY KEY (`id`),
-  INDEX `DDA_from_account_FK_idx` (`from_acc_id` ASC) INVISIBLE,
-  INDEX `DDA_to_account_FK_idx` (`to_acc_id` ASC) VISIBLE,
-  CONSTRAINT `DDA_from_account_FK`
+  INDEX `dda_from_account_fk_idx` (`from_acc_id` ASC) INVISIBLE,
+  INDEX `dda_to_account_fk_idx` (`to_acc_id` ASC) VISIBLE,
+  CONSTRAINT `dda_from_account_fk`
     FOREIGN KEY (`from_acc_id`)
-    REFERENCES `payment`.`Account` (`id`)
+    REFERENCES `payment`.`account` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `DDA_to_account_FK`
+  CONSTRAINT `dda_to_account_fk`
     FOREIGN KEY (`to_acc_id`)
-    REFERENCES `payment`.`Account` (`id`)
+    REFERENCES `payment`.`account` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

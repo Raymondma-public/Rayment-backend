@@ -6,6 +6,7 @@ import com.ma.raymond.rayment.models.httpObject.ResponseDTO;
 import com.ma.raymond.rayment.services.BalanceService;
 import com.ma.raymond.rayment.services.CTService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -18,6 +19,9 @@ public class PaymentController {
     @Autowired
     CTService ctService;
 
+    @Value("${bank}")
+    private String currentBank;
+
     @GetMapping("/balance")
     public ResponseDTO getBalance(@RequestParam("account_id") Integer accountId, @RequestParam("curr") String currency) throws AccountNotFoundException {
         BigDecimal balance= balanceService.getBalance(accountId, currency);
@@ -26,8 +30,17 @@ public class PaymentController {
 
 
     @PutMapping("/CT")
-    public ResponseDTO ct(@RequestParam("from_acc_id") Integer fromAccId, @RequestParam("to_acc_id") Integer toAccId, @RequestParam("curr") String curr, @RequestParam("amount") BigDecimal amount) throws AccountNotFoundException, InsufficientFundException {
-        ctService.ct(fromAccId,toAccId,curr,amount);
+    public ResponseDTO ct(@RequestParam("from_acc_id") Integer fromAccId,@RequestParam(value="to_bank", required=false )String toBank, @RequestParam("to_acc_id") Integer toAccId, @RequestParam("curr") String curr, @RequestParam("amount") BigDecimal amount) throws AccountNotFoundException, InsufficientFundException {
+        if(currentBank.equals(toBank) || currentBank==null){
+            ctService.ct(fromAccId,toAccId,curr,amount);
+        }else{
+            //cross bank
+            //query account
+
+            //ct
+
+        }
+
         return new ResponseDTO("", String.format("Transfer %s %.2f OK ",curr,amount), "", "temp instance", "helpUrl", null);
     }
 }

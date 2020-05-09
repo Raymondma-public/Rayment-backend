@@ -2,6 +2,7 @@ package com.ma.raymond.rayment.models;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,7 +14,7 @@ public class History {
     //    private Integer from;
 //    private Integer to;
     private String currency;
-    private double amount;
+    private BigDecimal amount;
     private LocalDateTime createDate;
 
     @ManyToOne
@@ -40,11 +41,11 @@ public class History {
         this.currency = currency;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

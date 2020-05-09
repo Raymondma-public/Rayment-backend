@@ -7,6 +7,7 @@ import com.ma.raymond.rayment.models.CurrencyAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ public class BalanceService {
     @Autowired
     AccountDao accountDao;
 
-    public Double getBalance(Integer accountId, String curr) throws AccountNotFoundException {
+    public BigDecimal getBalance(Integer accountId, String curr) throws AccountNotFoundException {
         Optional<Account> acc=accountDao.getAccountById(accountId);
         acc.orElseThrow(()->new AccountNotFoundException(String.format("Account id %d not exist", accountId)));
         List<CurrencyAccount> currencyAccountList=acc.get().getCurrencyAccountList();

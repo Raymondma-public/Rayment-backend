@@ -3,6 +3,7 @@ package com.ma.raymond.rayment.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 public class CurrencyAccount {
@@ -10,7 +11,7 @@ public class CurrencyAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String currency;
-    private double balance;
+    private BigDecimal balance;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
@@ -35,11 +36,11 @@ public class CurrencyAccount {
         this.currency = currency;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class CTService {
 
 
     @Transactional
-    public void ct(Integer fromAcctId, Integer toAccountId, String curr, double amount) throws AccountNotFoundException, InsufficientFundException {
+    public void ct(Integer fromAcctId, Integer toAccountId, String curr, BigDecimal amount) throws AccountNotFoundException, InsufficientFundException {
         Optional<Account> formAccount=accountDao.getAccountById(fromAcctId);
         Optional<Account> toAccount=accountDao.getAccountById(toAccountId);
 
@@ -49,12 +50,12 @@ public class CTService {
         if (fromAcc == null || toAcc == null) {
             throw new RuntimeException("One Currency Account not found");
         }
-        if(fromAcc.getBalance() - amount<0){
+        if(fromAcc.getBalance().subtract(amount).compareTo(BigDecimal.ZERO)<0){
             throw new InsufficientFundException(String.format("Insufficient Fund: %.2f",fromAcc.getBalance()));
         }
 
-        fromAcc.setBalance(fromAcc.getBalance() - amount);
-        toAcc.setBalance(toAcc.getBalance() + amount);
+        fromAcc.setBalance(fromAcc.getBalance().subtract(amount) );
+        toAcc.setBalance(toAcc.getBalance().add(amount));
 
 
         currAccountDao.save(fromAcc);

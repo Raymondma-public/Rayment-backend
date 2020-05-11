@@ -45,7 +45,10 @@ public class PaymentController {
             //ct
             mqSender.send(PaymentMQ.QUEUE_PAYMENT_NETWORK_REQ_H,fromAccId+" "+toBank+" "+curr+" "+amount);
 
-            //hold fund
+            //TODO: hold fund
+            //if received success response, remove fund(handle in other method)
+            //if received fail response, add back to account(handle in other method)
+            //No need timeout case
 
             return new ResponseDTO("", String.format("Transfer request %s %.2f Sent to network",curr,amount), "", "temp instance", "helpUrl", null);
         }

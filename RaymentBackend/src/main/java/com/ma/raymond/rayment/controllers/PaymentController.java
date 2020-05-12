@@ -42,13 +42,16 @@ public class PaymentController {
             return new ResponseDTO("", String.format("Transfer %s %.2f OK ",curr,amount), "", "temp instance", "helpUrl", null);
         }else{
             //cross bank
-            //ct
-            mqSender.send(PaymentMQ.QUEUE_PAYMENT_NETWORK_REQ_H,fromAccId+" "+toBank+" "+curr+" "+amount);
-
             //TODO: hold fund
             //if received success response, remove fund(handle in other method)
             //if received fail response, add back to account(handle in other method)
             //No need timeout case
+
+
+            //ct
+            mqSender.send(PaymentMQ.QUEUE_PAYMENT_NETWORK_REQ_H,fromAccId+" "+toBank+" "+curr+" "+amount);
+
+
 
             return new ResponseDTO("", String.format("Transfer request %s %.2f Sent to network",curr,amount), "", "temp instance", "helpUrl", null);
         }

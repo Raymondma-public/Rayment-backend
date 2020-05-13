@@ -45,7 +45,7 @@ public class PaymentController {
             //TODO: hold fund
             //if received success response, remove fund(handle in other method)
             //if received fail response, add back to account(handle in other method)
-            //No need timeout case
+            //Timeout case, in case mq message loss
 
 
             //ct

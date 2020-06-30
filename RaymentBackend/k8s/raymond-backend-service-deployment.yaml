@@ -1,4 +1,3 @@
-#updated to LF
 kind: Service
 apiVersion: v1
 metadata:

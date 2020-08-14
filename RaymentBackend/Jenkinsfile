@@ -37,7 +37,7 @@ node('haimaxy-jnlp')  {
         echo "${SPRING_PROFILES_ACTIVE}"
         dir('RaymentBackend') {
             sh "sed -i 's/<SPRING_PROFILES_ACTIVE>/${SPRING_PROFILES_ACTIVE}/' Dockerfile"
-            sh "docker build -t rayment-backend:${build_tag} ."
+            sh "docker build -t rayment-backend:v${build_tag}_${env.BRANCH_NAME} ."
         }
     }
     stage('Push docker'){

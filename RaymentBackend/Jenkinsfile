@@ -42,6 +42,10 @@ node('haimaxy-jnlp')  {
     }
     stage('Push docker'){
         echo 'Push docker'
+        dir('RaymentBackend') {
+            sh "docker tag rayment-backend:v${build_tag}_${env.BRANCH_NAME} raymondmapublic/rayment-backend:v${build_tag}_${env.BRANCH_NAME}"
+            sh "docker push raymondmapublic/rayment-backend:v${build_tag}_${env.BRANCH_NAME}"
+        }
     }
 
     stage('Deploy K8s'){

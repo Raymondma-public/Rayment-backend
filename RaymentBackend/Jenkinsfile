@@ -5,7 +5,7 @@ node('haimaxy-jnlp')  {
 //    }
     environment {
         registry = "raymondmapublic/rayment-backend"
-        registryCredential = ‘dockerhub’
+        registryCredential = "dockerhub"
         dockerImage = ''
     }
 
@@ -45,12 +45,10 @@ node('haimaxy-jnlp')  {
             sh "docker build -t rayment-backend:v${build_tag}_${env.BRANCH_NAME} ."
         }*/
 
-      steps{
         dir('RaymentBackend') {
-          scripts{
           dockerImage = docker.build registry + ":v${build_tag}_${env.BRANCH_NAME}"
-          }
-        }
+
+
       }
 
     }
@@ -61,13 +59,12 @@ node('haimaxy-jnlp')  {
             sh "docker push raymondmapublic/rayment-backend:v${build_tag}_${env.BRANCH_NAME}"
         }*/
 
-              steps{
-                script {
+
+
                   docker.withRegistry( '', registryCredential ) {
                     dockerImage.push()
                   }
-                }
-              }
+
     }
 
     stage('Deploy K8s'){

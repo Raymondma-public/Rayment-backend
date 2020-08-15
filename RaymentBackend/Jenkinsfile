@@ -46,7 +46,7 @@ node('haimaxy-jnlp')  {
         }*/
 
         dir('RaymentBackend') {
-          dockerImage = docker.build registry + ":v${build_tag}_${env.BRANCH_NAME}"
+          dockerImage = docker.build "${registry}:v${build_tag}_${env.BRANCH_NAME}"
 
 
       }

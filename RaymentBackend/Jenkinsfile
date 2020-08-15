@@ -47,8 +47,10 @@ node('haimaxy-jnlp')  {
             sh "docker build -t rayment-backend:v${build_tag}_${env.BRANCH_NAME} ."
         }*/
 
+
         dir('RaymentBackend') {
             echo "${registry}"
+          sh "sed -i 's/<SPRING_PROFILES_ACTIVE>/${SPRING_PROFILES_ACTIVE}/' Dockerfile"
           dockerImage = docker.build "${registry}:v${build_tag}_${env.BRANCH_NAME}"
 
 

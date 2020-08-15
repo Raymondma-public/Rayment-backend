@@ -1,8 +1,5 @@
 node('haimaxy-jnlp')  {
 
-//    environment {
-//        SPRING_PROFILES_ACTIVE='prod'
-//    }
    stage('Init Var'){
             registry = "raymondmapublic/rayment-backend"
            registryCredential = "dockerhub"
@@ -12,9 +9,6 @@ node('haimaxy-jnlp')  {
    }
 
    stage('Git clone'){
-
-       //echo 'Git pull'
-       //checkout([$class: 'GitSCM', branches: [[name: '*/${branch}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '${credentialsId}', url: '${url}']]])
        echo 'Git clone'
        git branch: 'master',
            credentialsId: '12345-1234-4696-af25-123455',
@@ -25,7 +19,6 @@ node('haimaxy-jnlp')  {
 
    stage('Gradle Build'){
         echo 'Gradle build'
-        //def buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
         if (isUnix()) {
             dir('RaymentBackend') {
                 sh 'chmod a+x gradlew'
@@ -40,14 +33,6 @@ node('haimaxy-jnlp')  {
 
     stage('Docker build'){
         echo 'Docker build'
-        /*echo "${build_tag}"
-        echo "${SPRING_PROFILES_ACTIVE}"
-        dir('RaymentBackend') {
-            sh "sed -i 's/<SPRING_PROFILES_ACTIVE>/${SPRING_PROFILES_ACTIVE}/' Dockerfile"
-            sh "docker build -t rayment-backend:v${build_tag}_${env.BRANCH_NAME} ."
-        }*/
-
-
         dir('RaymentBackend') {
             echo "${registry}"
           sh "sed -i 's/<SPRING_PROFILES_ACTIVE>/${SPRING_PROFILES_ACTIVE}/' Dockerfile"
@@ -58,17 +43,11 @@ node('haimaxy-jnlp')  {
 
     }
     stage('Push docker'){
- /*       echo 'Push docker'
-        dir('RaymentBackend') {
-            sh "docker tag rayment-backend:v${build_tag}_${env.BRANCH_NAME} raymondmapublic/rayment-backend:v${build_tag}_${env.BRANCH_NAME}"
-            sh "docker push raymondmapublic/rayment-backend:v${build_tag}_${env.BRANCH_NAME}"
-        }*/
+        echo 'Push docker'
 
-
-
-                  docker.withRegistry('', registryCredential ) {
-                    dockerImage.push()
-                  }
+          docker.withRegistry('', registryCredential ) {
+            dockerImage.push()
+          }
 
     }
 
